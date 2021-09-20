@@ -35,7 +35,7 @@ do
 
 	echo "adding share $name at $path for user $user"
 	mkdir --parents "$path"
-	chown $user
+	chown $user "$path"
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
 	echo "    read only = no" >> /etc/samba/smb.conf
