@@ -19,6 +19,7 @@ do
     printf "$password\n$password" | smbpasswd -s -a $username
 done < /etc/samba/users.conf
 
+echo "revertign shares..."
 echo "[global]" > /etc/samba/smb.conf
 echo "    log file = /var/log/samba/%m" >> /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
@@ -30,13 +31,15 @@ while read line
 do
     name=$(echo $line | cut -d " " -f 1)
     path=$(echo $line | cut -d " " -f 2)
-	users=$(echo $line | cut -d " " -f 3-)
+	user=$(echo $line | cut -d " " -f 3)
 
-	echo "adding share $name at $path for users [$users]"
+	echo "adding share $name at $path for user $user"
+	mkdir --parents "$path"
+	chown $user
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
 	echo "    read only = no" >> /etc/samba/smb.conf
-	echo "    valid users = $users" >> /etc/samba/smb.conf
+	echo "    valid users = $user" >> /etc/samba/smb.conf
 	echo "    inherit permissions = yes" >> /etc/samba/smb.conf
 done < /etc/samba/shares.conf
 
