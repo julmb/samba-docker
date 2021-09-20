@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: clear samba user database
+
 echo "reverting users..."
 echo "root:x:0:0:root:/root:/bin/ash" > /etc/passwd
 echo "nobody:x:65534:65534:nobody:/:/sbin/nologin" >> /etc/passwd
