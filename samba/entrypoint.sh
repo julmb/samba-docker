@@ -38,8 +38,8 @@ do
 	chown $user "$path"
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
-	echo "    read only = no" >> /etc/samba/smb.conf
 	echo "    valid users = $user" >> /etc/samba/smb.conf
+	echo "    read only = no" >> /etc/samba/smb.conf
 	echo "    inherit permissions = yes" >> /etc/samba/smb.conf
 done < /etc/samba/shares.conf
 
