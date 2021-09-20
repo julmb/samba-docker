@@ -19,7 +19,7 @@ do
     printf "$password\n$password" | smbpasswd -s -a $username
 done < /etc/samba/users.conf
 
-echo "revertign shares..."
+echo "reverting shares..."
 echo "[global]" > /etc/samba/smb.conf
 echo "    log file = /var/log/samba/%m" >> /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
