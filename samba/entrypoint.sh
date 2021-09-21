@@ -11,6 +11,10 @@ echo "nobody:x:65534:" >> /etc/group
 
 echo "resetting samba..."
 rm -r /var/lib/samba
+mkdir /var/lib/samba
+mkdir -m 770 /var/lib/samba/bind-dns
+mkdir -m 700 /var/lib/samba/private
+mkdir -m 755 /var/lib/samba/sysvol
 
 while read line
 do
