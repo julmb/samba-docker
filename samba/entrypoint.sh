@@ -44,6 +44,7 @@ do
 	echo "    valid users = $user" >> /etc/samba/smb.conf
 	echo "    read only = no" >> /etc/samba/smb.conf
 	echo "    inherit permissions = yes" >> /etc/samba/smb.conf
+	echo "    store dos attributes = no" >> /etc/samba/smb.conf
 done < /etc/samba/shares.conf
 
 exec "$@"
