@@ -18,12 +18,12 @@ mkdir -m 755 /var/lib/samba/sysvol
 
 while read line
 do
-    username=$(echo $line | cut -d " " -f 1)
-    password=$(echo $line | cut -d " " -f 2)
+	username=$(echo $line | cut -d " " -f 1)
+	password=$(echo $line | cut -d " " -f 2)
 
-    echo "adding $username with password $password..."
-    adduser --disabled-password --no-create-home $username
-    printf "$password\n$password" | smbpasswd -s -a $username
+	echo "adding $username with password $password..."
+	adduser --disabled-password --no-create-home $username
+	printf "$password\n$password" | smbpasswd -s -a $username
 done < /etc/samba/users.conf
 
 echo "resetting samba configuration..."
@@ -34,8 +34,8 @@ echo >> /etc/samba/smb.conf
 
 while read line
 do
-    name=$(echo $line | cut -d " " -f 1)
-    path=$(echo $line | cut -d " " -f 2)
+	name=$(echo $line | cut -d " " -f 1)
+	path=$(echo $line | cut -d " " -f 2)
 	user=$(echo $line | cut -d " " -f 3)
 
 	echo "adding share $name at $path for user $user"
