@@ -1,8 +1,6 @@
 #!/bin/sh
 
-# TODO: clear samba user database
-
-echo "reverting users..."
+echo "resetting users..."
 echo "root:x:0:0:root:/root:/bin/ash" > /etc/passwd
 echo "nobody:x:65534:65534:nobody:/:/sbin/nologin" >> /etc/passwd
 echo "root:!::0:::::" > /etc/shadow
@@ -10,6 +8,9 @@ echo "nobody:!::0:::::" >> /etc/shadow
 echo "root:x:0:root" > /etc/group
 echo "nogroup:x:65533:" >> /etc/group
 echo "nobody:x:65534:" >> /etc/group
+
+echo "resetting samba..."
+rm -r /var/lib/samba
 
 while read line
 do
