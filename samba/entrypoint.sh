@@ -9,7 +9,7 @@ echo "root:x:0:root" > /etc/group
 echo "nogroup:x:65533:" >> /etc/group
 echo "nobody:x:65534:" >> /etc/group
 
-echo "resetting samba..."
+echo "resetting samba state..."
 rm -r /var/lib/samba
 mkdir /var/lib/samba
 mkdir -m 770 /var/lib/samba/bind-dns
@@ -26,11 +26,9 @@ do
     printf "$password\n$password" | smbpasswd -s -a $username
 done < /etc/samba/users.conf
 
-echo "reverting shares..."
+echo "resetting samba configuration..."
 echo "[global]" > /etc/samba/smb.conf
-echo "    log file = /var/log/samba/%m" >> /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
-echo "    server role = standalone server" >> /etc/samba/smb.conf
 
 echo >> /etc/samba/smb.conf
 
