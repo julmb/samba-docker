@@ -28,7 +28,6 @@ done < /etc/samba/users.conf
 echo "resetting samba configuration..."
 echo "[global]" > /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
-echo >> /etc/samba/smb.conf
 
 while read line
 do
@@ -39,6 +38,7 @@ do
 	echo "adding share $name at $path for user $user"
 	mkdir --parents "$path"
 	chown $user "$path"
+	echo >> /etc/samba/smb.conf
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
 	if test $user = nobody
@@ -50,7 +50,6 @@ do
 	fi
 	echo "    read only = no" >> /etc/samba/smb.conf
 	echo "    store dos attributes = no" >> /etc/samba/smb.conf
-	echo >> /etc/samba/smb.conf
 done < /etc/samba/shares.conf
 
 exec "$@"
