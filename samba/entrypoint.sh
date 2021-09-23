@@ -10,12 +10,10 @@ cp /etc/shadow.new /etc/shadow
 cp /etc/group.new /etc/group
 
 echo "resetting samba state..."
-rm -r /var/lib/samba
-mkdir /var/lib/samba
+rm -r /var/lib/samba/*
 mkdir -m 770 /var/lib/samba/bind-dns
 mkdir -m 700 /var/lib/samba/private
 mkdir -m 755 /var/lib/samba/sysvol
-smbpasswd -a -n nobody
 
 while read line
 do
@@ -30,7 +28,6 @@ done < /etc/samba/users.conf
 echo "resetting samba configuration..."
 echo "[global]" > /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
-
 echo >> /etc/samba/smb.conf
 
 while read line
@@ -41,15 +38,14 @@ do
 
 	echo "adding share $name at $path for user $user"
 	mkdir --parents "$path"
+	chown $user "$path"
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
-	if test -z $user
+	if test $user = nobody
 	then
-		chown nobody "$path"
 		echo "    guest ok = yes" >> /etc/samba/smb.conf
 		echo "    guest only = yes" >> /etc/samba/smb.conf
 	else
-		chown $user "$path"
 		echo "    valid users = $user" >> /etc/samba/smb.conf
 	fi
 	echo "    read only = no" >> /etc/samba/smb.conf
