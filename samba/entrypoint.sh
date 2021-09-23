@@ -40,13 +40,14 @@ do
 
 	echo "adding share $name at $path for user $user"
 	mkdir --parents "$path"
-	chown $user "$path"
 	echo "[$name]" >> /etc/samba/smb.conf
 	echo "    path = $path" >> /etc/samba/smb.conf
 	if test -z $user
 	then
+		chown nobody "$path"
 		echo "    guest ok = yes" >> /etc/samba/smb.conf
 	else
+		chown $user "$path"
 		echo "    valid users = $user" >> /etc/samba/smb.conf
 	fi
 	echo "    read only = no" >> /etc/samba/smb.conf
