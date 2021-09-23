@@ -1,13 +1,13 @@
 #!/bin/sh
 
+if test ! -e /etc/passwd.new; then; echo "backing up /etc/passwd..."; cp /etc/passwd /etc/passwd.new; fi
+if test ! -e /etc/shadow.new; then; echo "backing up /etc/shadow..."; cp /etc/shadow /etc/shadow.new; fi
+if test ! -e /etc/group.new; then; echo "backing up /etc/group..."; cp /etc/group /etc/group.new; fi
+
 echo "resetting users..."
-echo "root:x:0:0:root:/root:/bin/ash" > /etc/passwd
-echo "nobody:x:65534:65534:nobody:/:/sbin/nologin" >> /etc/passwd
-echo "root:!::0:::::" > /etc/shadow
-echo "nobody:!::0:::::" >> /etc/shadow
-echo "root:x:0:root" > /etc/group
-echo "nogroup:x:65533:" >> /etc/group
-echo "nobody:x:65534:" >> /etc/group
+cp /etc/passwd.new /etc/passwd
+cp /etc/shadow.new /etc/shadow
+cp /etc/group.new /etc/group
 
 echo "resetting samba state..."
 rm -r /var/lib/samba
@@ -15,7 +15,6 @@ mkdir /var/lib/samba
 mkdir -m 770 /var/lib/samba/bind-dns
 mkdir -m 700 /var/lib/samba/private
 mkdir -m 755 /var/lib/samba/sysvol
-
 smbpasswd -a -n nobody
 
 while read line
