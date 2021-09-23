@@ -16,6 +16,8 @@ mkdir -m 770 /var/lib/samba/bind-dns
 mkdir -m 700 /var/lib/samba/private
 mkdir -m 755 /var/lib/samba/sysvol
 
+smbpasswd -a -n nobody
+
 while read line
 do
 	username=$(echo $line | cut -d " " -f 1)
@@ -46,6 +48,7 @@ do
 	then
 		chown nobody "$path"
 		echo "    guest ok = yes" >> /etc/samba/smb.conf
+		echo "    force user = nobody" >> /etc/samba/smb.conf
 	else
 		chown $user "$path"
 		echo "    valid users = $user" >> /etc/samba/smb.conf
