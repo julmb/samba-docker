@@ -2,10 +2,13 @@
 
 echo "resetting users..."
 echo "root:x:0:0:root:/root:/bin/ash" > /etc/passwd
+echo "ftp:x:21:21::/var/lib/ftp:/sbin/nologin" >> /etc/passwd
 echo "nobody:x:65534:65534:nobody:/:/sbin/nologin" >> /etc/passwd
 echo "root:!::0:::::" > /etc/shadow
+echo "ftp:!::0:::::" >> /etc/shadow
 echo "nobody:!::0:::::" >> /etc/shadow
 echo "root:x:0:root" > /etc/group
+echo "ftp:x:21:" >> /etc/group
 echo "nogroup:x:65533:" >> /etc/group
 echo "nobody:x:65534:" >> /etc/group
 
@@ -29,6 +32,7 @@ done < /etc/samba/users.conf
 echo "resetting samba configuration..."
 echo "[global]" > /etc/samba/smb.conf
 echo "    log level = 1" >> /etc/samba/smb.conf
+echo "    guest account = ftp" >> /etc/samba/smb.conf
 
 echo >> /etc/samba/smb.conf
 
@@ -44,7 +48,7 @@ do
 	echo "    path = $path" >> /etc/samba/smb.conf
 	if test -z $user
 	then
-		chown nobody "$path"
+		chown ftp "$path"
 		echo "    guest ok = yes" >> /etc/samba/smb.conf
 	else
 		chown $user "$path"
