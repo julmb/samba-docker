@@ -47,7 +47,7 @@ do
 	then
 		chown nobody "$path"
 		echo "    guest ok = yes" >> /etc/samba/smb.conf
-		echo "    force user = nobody" >> /etc/samba/smb.conf
+		echo "    guest only = yes" >> /etc/samba/smb.conf
 	else
 		chown $user "$path"
 		echo "    valid users = $user" >> /etc/samba/smb.conf
