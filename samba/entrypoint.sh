@@ -1,8 +1,8 @@
 #!/bin/sh
 
-if test ! -e /etc/passwd.new; then; echo "backing up /etc/passwd..."; cp /etc/passwd /etc/passwd.new; fi
-if test ! -e /etc/shadow.new; then; echo "backing up /etc/shadow..."; cp /etc/shadow /etc/shadow.new; fi
-if test ! -e /etc/group.new; then; echo "backing up /etc/group..."; cp /etc/group /etc/group.new; fi
+if test ! -e /etc/passwd.new; then echo "backing up /etc/passwd..."; cp /etc/passwd /etc/passwd.new; fi
+if test ! -e /etc/shadow.new; then echo "backing up /etc/shadow..."; cp /etc/shadow /etc/shadow.new; fi
+if test ! -e /etc/group.new; then echo "backing up /etc/group..."; cp /etc/group /etc/group.new; fi
 
 echo "resetting users..."
 cp /etc/passwd.new /etc/passwd
