@@ -52,4 +52,4 @@ do
 	echo "    store dos attributes = no" >> /etc/samba/smb.conf
 done < /etc/samba/shares.conf
 
-exec "$@"
+exec $@
